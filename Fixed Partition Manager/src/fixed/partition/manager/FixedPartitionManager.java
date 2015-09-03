@@ -22,12 +22,20 @@ public class FixedPartitionManager {
         
         //Variables the system needs are defined here
         ArrayList<Integer> RegionsArray = new ArrayList<>();
+        ArrayList<Integer> RegionsAndSize = new ArrayList<>();
+        ArrayList<Integer> ProgramCounter = new ArrayList<>();
+        ArrayList<ArrayList<Integer>> ProgramCounter1 = new ArrayList<ArrayList<Integer>>();
+        
+        int noOfRegionsInput;
+        int noOfProgramsInput;
         int noOfRegions;
         int noOfPrograms;
-        int MemorySizes;
+        int memorySizes;
+        int memoryRegion;
         int initialTime = 0;
-        int time = 0;
+        int calculatedTime = 0;
         int caseNo = 1;
+        
         
              
         System.out.println("Welcome to the Fixed Partition Manager");
@@ -46,24 +54,29 @@ public class FixedPartitionManager {
             System.out.println("\nCase " + caseNo);
             System.out.print(" \nPlease Enter the number of memory Reigoions : ");
 
-            noOfRegions = getInput.nextInt();
-
+            noOfRegionsInput = getInput.nextInt();
+            RegionsAndSize.add(noOfRegionsInput);
             System.out.print("Please Enter the number of programs to be executed : ");
 
-            noOfPrograms = getInput.nextInt();
+            noOfProgramsInput = getInput.nextInt();
+            RegionsAndSize.add(noOfProgramsInput);
             
             //Exit the loop when 0 0 pair is given as inputs
-            if(noOfPrograms == 0 && noOfRegions == 0 )
+            if(noOfProgramsInput == 0 && noOfRegionsInput == 0 )
             {
                 break;
             }
+            
 
+            
+            
+            
             System.out.println("\nAccording to the Regions you have entered, enter the Memory sizes in order ");
             System.out.println("=========================================================================== \n");
 
-
+            
             //Get the sizes of memory regions as inputs
-            for(int i = 0; i < noOfRegions; i++)
+            for(int i = 0; i < RegionsAndSize.get(0); i++)
             {
                 if(i==0)
                 {
@@ -94,7 +107,7 @@ public class FixedPartitionManager {
 
 
            // Get program size and time to execute each program
-            for(int i=1; i <= noOfPrograms; i++)
+            for(int i=1; i <=  RegionsAndSize.get(1); i++)
             {
                 if(i==1)
                 {
@@ -135,7 +148,7 @@ public class FixedPartitionManager {
         
         
         
-            //Program Start
+        //Print the Indexes
             
         System.out.println("\nProgram will now Start Calculateion");
         System.out.println("====================================\n");
@@ -156,7 +169,93 @@ public class FixedPartitionManager {
         System.out.println("Index [8] is = " +RegionsArray.get(8));
         System.out.println("Index [9] is = " +RegionsArray.get(9));
        
+        System.out.println("\nRegion Size = " + RegionsAndSize.get(0) + " And the No. Of times the loop should run = " + (RegionsAndSize.get(1)*2) );
         
+        //Start the Program
+        
+        for(int i= RegionsAndSize.get(0);i <= (RegionsAndSize.get(1)*2); i++)
+        {
+            System.out.println("\nCame inside the Loop\n");
+            
+            if((i % 2) == 0)
+            {
+                System.out.println("Came inside If and its an Even number\n");
+                
+                if(RegionsArray.get(i) <= RegionsArray.get(0))
+                {
+                    System.out.println("Came inside the nested if If and adding to arraylist\n");
+                    System.out.println("Index [" + i + "] <= " + RegionsArray.get(0));
+                    System.out.println("\nCalculated Time : " +  RegionsArray.get(i+1));
+                    
+                    calculatedTime += RegionsArray.get(i+1);
+                    memoryRegion = 1;
+                    
+                    
+                    ProgramCounter.add(1);
+                    ProgramCounter.add(memoryRegion);
+                    ProgramCounter.add(initialTime);
+                    ProgramCounter.add(calculatedTime);
+                    
+                    
+                    ProgramCounter1.add(ProgramCounter);
+                }
+                else if(RegionsArray.get(i) <= RegionsArray.get(1))
+                {
+                    calculatedTime += RegionsArray.get(i+1);
+                    memoryRegion = 2;
+                    
+                    ProgramCounter.add(1);
+                    ProgramCounter.add(memoryRegion);
+                    ProgramCounter.add(initialTime);
+                    ProgramCounter.add(calculatedTime);
+                }
+                else if(RegionsArray.get(i) > RegionsArray.get(0) && RegionsArray.get(i) <= RegionsArray.get(1))
+                {
+                    calculatedTime += RegionsArray.get(i+1);
+                    memoryRegion = 2;
+                    
+                    ProgramCounter.add(1);
+                    ProgramCounter.add(memoryRegion);
+                    ProgramCounter.add(initialTime);
+                    ProgramCounter.add(calculatedTime);
+                }
+            }
+        }
+        int FValue=0;
+        int SValue=1;
+        int TValue=2;
+        int FoValue=3;
+        
+        
+        for(ArrayList<Integer> r : ProgramCounter1)
+        {
+            //System.out.print(" " + r);
+            
+            int rem = r.size()/4;
+            int rem2 = r.size();
+
+            System.out.println("Size of the Pairs = " + rem);
+            System.out.println("Size of the Array = " + rem2);
+            
+           
+            
+            
+            while(rem>1)
+            {
+                System.out.println("Cheking Values are : " + FValue + " " + SValue + " " + TValue + " " + FoValue );
+                System.out.println("Program " + r.get(FValue) +" runs in region " + r.get(SValue) + " from " + r.get(TValue) + " to " + r.get(FoValue));
+                
+                FValue+=4;
+                SValue+=4;
+                TValue+=4;
+                FoValue+=4;
+                rem--;
+            }
+            break;
+            
+        }
+        
+        System.out.println("\n");
     }
     
 }
