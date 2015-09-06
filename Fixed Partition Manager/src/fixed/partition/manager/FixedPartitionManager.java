@@ -61,6 +61,7 @@ public class FixedPartitionManager {
         {
             if(isSet[0]==false)
             {
+                //Memory region 1
                 if(programsAndTime[i][1] <= ram[0][0])
                 {
                     memoryRegion = 1;
@@ -68,6 +69,7 @@ public class FixedPartitionManager {
                     System.out.println("Program "+ (i+1) + " runs in region " + memoryRegion + " from " + timeCounter[0][0] + " to " + timeCounter[0][1] );
                     isSet[0]=true;
                     isSet[1]=false;
+                    isSet[2]=false;
                     
                     timeCounter[0][0] = timeCounter[0][1];
                     avgTurnAroundTime+= timeCounter[0][1];
@@ -79,9 +81,10 @@ public class FixedPartitionManager {
                     System.out.println("Program "+ (i+1) + " runs in region " + memoryRegion + " from " + timeCounter[1][0] + " to " + timeCounter[1][1] );
                     isSet[0]=true;
                     isSet[1]=false;
+                    isSet[2]=false;
                    
                     timeCounter[1][0] = timeCounter[1][1];
-                    avgTurnAroundTime+= timeCounter[0][1];
+                    avgTurnAroundTime += timeCounter[1][1];
                 }
                 else if(programsAndTime[i][1] > ram[0][1] && programsAndTime[i][1] <= ram[0][2])
                 {
@@ -90,14 +93,16 @@ public class FixedPartitionManager {
                     System.out.println("Program "+ (i+1) + " runs in region " + memoryRegion + " from " + timeCounter[2][0] + " to " + timeCounter[2][1] );
                     isSet[0]=true;
                     isSet[1]=false;
+                    isSet[2]=false;
                     
                     timeCounter[2][0] = timeCounter[2][1];
-                    avgTurnAroundTime+= timeCounter[0][1];
+                    avgTurnAroundTime += timeCounter[2][1];
                     
                 }
             }
             else if(isSet[1]==false)
             {
+                //Memory region 2
                 if(programsAndTime[i][1] <= ram[0][1])
                 {
                     memoryRegion = 2;
@@ -105,23 +110,38 @@ public class FixedPartitionManager {
                     System.out.println("Program "+ (i+1) + " runs in region " + memoryRegion + " from " + timeCounter[1][0] + " to " + timeCounter[1][1] );
                     isSet[1]=true;
                     isSet[0]=false;
+                    isSet[2]=false;
                     
                     timeCounter[1][0] = timeCounter[1][1];
                     avgTurnAroundTime+= timeCounter[1][1];
                 }
+                else if(programsAndTime[i][1] > ram[0][1] && programsAndTime[i][1] <= ram[0][2])
+                {
+                    memoryRegion = 3;
+                    timeCounter[2][1]+=programsAndTime[i][2];
+                    System.out.println("Program "+ (i+1) + " runs in region " + memoryRegion + " from " + timeCounter[2][0] + " to " + timeCounter[2][1] );
+                    isSet[1]=true;
+                    isSet[0]=false;
+                    isSet[2]=false;
+                    
+                    timeCounter[2][0] = timeCounter[2][1];
+                    avgTurnAroundTime+= timeCounter[2][1];
+                }
             }
             else if(isSet[2]==false)
             {
-                if(programsAndTime[i][3] <= ram[0][2])
+                //Memory region 3
+                if(programsAndTime[i][1] <= ram[0][2])
                 {
+                    System.out.println("sdsds");
                     memoryRegion = 3;
-                    timeCounter[0][1]+=programsAndTime[i][2];
-                    System.out.println("Program "+ (i+1) + " runs in region " + memoryRegion + " from " + timeCounter[0][0] + " to " + timeCounter[0][1] );
+                    timeCounter[2][1]+=programsAndTime[i][2];
+                    System.out.println("Program "+ (i+1) + " runs in region " + memoryRegion + " from " + timeCounter[2][0] + " to " + timeCounter[2][1] );
                     isSet[0]=false;
                     isSet[1]=false;
                     isSet[2]=true;
-                    timeCounter[0][0] = timeCounter[0][1];
-                    avgTurnAroundTime+= timeCounter[0][1];
+                    timeCounter[2][0] = timeCounter[2][1];
+                    avgTurnAroundTime += timeCounter[2][1];
                 }
             }
             
