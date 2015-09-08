@@ -32,7 +32,8 @@ public class FixedPartitionManager {
         int timeCounter [][] = {{0, 0},{0, 0},{0, 0}};
         int memoryRegion;
         double avgTurnAroundTime = 0;
-        int minimumIndex = 2;
+        int minimumIndexValue = 0 ,minimumIndex = 0;
+        
         
         System.out.println(memoryRegionsAndSizes[0] + " " + memoryRegionsAndSizes[1]);
         System.out.println(ram[0] + " " + ram[1] + " " + ram[2]);
@@ -60,38 +61,33 @@ public class FixedPartitionManager {
 
         for(int i = 0; i < memoryRegionsAndSizes[1];i++)
         {
-            //Switch Sort
+            //Switch&Replace Sort
             if(programsAndTime[i][0] > 1)
             {
                 System.out.println( programsAndTime[i][0] + " Pairs on program " + (i+1));
                 
-                for(int k = 0; k <= programsAndTime[i][0];k+=4)
+                for(int k = 1; k <= programsAndTime[i][0]*2;k++)
                 {
-                    try
+                    minimumIndexValue = programsAndTime[i][2];
+                    if((k%2)==0)
                     {
-                        System.out.println(programsAndTime[i][k+2] + " " + programsAndTime[i][k+4]);
-                       
-                        
-                        
-                        if(programsAndTime[i][k+2] <= programsAndTime[i][k+4])
+                        try
                         {
-                            minimumIndex = k+2;
+                            System.out.println(k);
+                            if(minimumIndexValue >= programsAndTime[i][k+2])
+                            {
+                                minimumIndexValue = programsAndTime[i][k+2];
+                                minimumIndex = programsAndTime[i][k+1];
+                            }
                         }
-                        else
+                        catch(ArrayIndexOutOfBoundsException e)
                         {
-                            minimumIndex = k+4;
+                            //Do nothing
                         }
                     }
-                    catch(ArrayIndexOutOfBoundsException e)
-                    {
-                        //Do nothing
-                    }
-
                 }
-                 
-                System.out.println("Final Minimum Index is = " + minimumIndex);
-                minimumIndex = 0;
-                        
+                System.out.println("Minimum time is = " + minimumIndexValue + " ,Minimum Time's Size is =  " + minimumIndex + "\n");
+
             }
 //            if(isSet[0]==false)
 //            {
