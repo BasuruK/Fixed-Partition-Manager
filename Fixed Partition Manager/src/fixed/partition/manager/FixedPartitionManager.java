@@ -32,7 +32,7 @@ public class FixedPartitionManager {
         int timeCounter [][] = {{0, 0},{0, 0},{0, 0}};
         int memoryRegion;
         double avgTurnAroundTime = 0;
-        int minimumIndexValue = 0 ,minimumTime = 0;
+
 
         System.out.println(memoryRegionsAndSizes[0] + " " + memoryRegionsAndSizes[1]);
         System.out.println(ram[0] + " " + ram[1] + " " + ram[2]);
@@ -56,41 +56,14 @@ public class FixedPartitionManager {
         
         //Program logic
         System.out.println("\nCase 2");
+        
+        Algorithms Algorithm = new Algorithms();
+        Algorithm.ReplaceSort(programsAndTime,memoryRegionsAndSizes[1]);
+        Algorithm.locationSort(programsAndTime,memoryRegionsAndSizes[1]);
 
         for(int i = 0; i < memoryRegionsAndSizes[1];i++)
         {
-            //Switch&Replace Sort
-            if(programsAndTime[i][0] > 1)
-            {
-                minimumIndexValue = programsAndTime[i][2];
-                
-                for(int k = 1; k <= programsAndTime[i][0]*2;k++)
-                {
-                    if((k%2)==0)
-                    {
-                        try
-                        {
-                            if(minimumIndexValue >= programsAndTime[i][k+2])
-                            {
-                                minimumIndexValue = programsAndTime[i][k+2];
-                                minimumTime = programsAndTime[i][k+1];
-                            }
-                            else
-                            {
-                                minimumTime = programsAndTime[i][k-1];
-                                break;
-                            }
-                        }
-                        catch(ArrayIndexOutOfBoundsException e)
-                        {
-                            //Do nothing
-                        }
-                    }
-                }
-                programsAndTime[i][1] = minimumTime;
-                programsAndTime[i][2] = minimumIndexValue;
 
-            }
             //Assiginin Start
             if(isSet[0]==false)
             {
@@ -125,7 +98,7 @@ public class FixedPartitionManager {
                     timeCounter[2][1]+=programsAndTime[i][2];
                     System.out.println("Program "+ (i+1) + " runs in region " + memoryRegion + " from " + timeCounter[2][0] + " to " + timeCounter[2][1] );
                     isSet[0]=true;
-                    isSet[1]=false;
+                    isSet[1]=true;
                     isSet[2]=false;
                     
                     timeCounter[2][0] = timeCounter[2][1];
@@ -160,13 +133,13 @@ public class FixedPartitionManager {
                     timeCounter[2][0] = timeCounter[2][1];
                     avgTurnAroundTime+= timeCounter[2][1];
                 }
+                
             }
             else if(isSet[2]==false)
             {
                 //Memory region 3
                 if(programsAndTime[i][1] <= ram[2])
                 {
-                    System.out.println("sdsds");
                     memoryRegion = 3;
                     timeCounter[2][1]+=programsAndTime[i][2];
                     System.out.println("Program "+ (i+1) + " runs in region " + memoryRegion + " from " + timeCounter[2][0] + " to " + timeCounter[2][1] );
@@ -180,5 +153,5 @@ public class FixedPartitionManager {
             
         }
         System.out.println("Average turnaround time = " + avgTurnAroundTime/memoryRegionsAndSizes[1]);
-    }
+   }
 }
