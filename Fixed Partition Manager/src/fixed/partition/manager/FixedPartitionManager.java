@@ -5,7 +5,13 @@
  */
 package fixed.partition.manager;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -25,15 +31,86 @@ public class FixedPartitionManager {
         ArrayList<Integer> addToPrintArray = new ArrayList<>();
         
         
-        int [] memoryRegionsAndSizes = {3,5};
-        int [] ram = {10,20,30};
-        int [][] programsAndTime = {{2,10,50,12,30}, {2,10,100,20,25}, {1,25,19}, {1,19,41}, {2,10,18,30,42}};
+//        int [] memoryRegionsAndSizes = {3,5};
+//        int [] ram = {10,20,30};
+//        int [][] programsAndTime = {{2,10,50,12,30}, {2,10,100,20,25}, {1,25,19}, {1,19,41}, {2,10,18,30,42}};
+//        boolean [] isSet = {false, false, false};
+//        int timeCounter [][] = {{0, 0},{0, 0},{0, 0}};
+//        int memoryRegion;
+//        double avgTurnAroundTime = 0;
+        int [] memoryRegionsAndSizes = new int [2];
+        int [] ram = null;
+        int [][] programsAndTime = null;
         boolean [] isSet = {false, false, false};
         int timeCounter [][] = {{0, 0},{0, 0},{0, 0}};
+        
+        String [][] TEMP = new String[10][10];
+        boolean [] status = {true,true,true};
+        int g=0;
+       
         int memoryRegion;
         double avgTurnAroundTime = 0;
-
-
+        
+        String S;
+        try {
+            BufferedReader getInputs = new BufferedReader(new FileReader("src\\fixed\\partition\\manager\\Inputs.txt"));
+            while(!( S = getInputs.readLine()).matches("0 0")) {
+                
+               String [] Tokens = S.split(" ");
+                if(status[0])
+                {
+                    for(int i = 0;i < Tokens.length-1;i++)
+                    {
+                        for(int j = 0;j < Tokens.length;j++)
+                        {
+                            System.out.println("memoryRegionsAndSizes["+j+"] = Tokens["+j+"]");       
+                            memoryRegionsAndSizes[j] = Integer.parseInt(Tokens[j]);
+                        }
+                    }
+                    programsAndTime = new int[memoryRegionsAndSizes[1]][5];
+                    status[0]=false;
+                }
+                else if(status[1])
+                {
+                    ram = new int[memoryRegionsAndSizes[0]];
+                    for(int i = 0;i < Tokens.length-2;i++)
+                    {
+                        for(int j = 0;j < Tokens.length;j++)
+                        {
+                            System.out.println("RAM["+j+"] = Tokens["+j+"]");       
+                            ram[j] = Integer.parseInt(Tokens[j]);
+                        }
+                    }
+                    status[1]=false;
+                }
+                else if(status[2])
+                {
+                        for(int j = 0;j < Tokens.length;j++)
+                        {
+                            System.out.println("programsAndTime["+g+"]["+j+"] = Tokens["+j+"]");       
+                            programsAndTime[g][j] = Integer.parseInt(Tokens[j]);
+                        }
+                    g++;
+                    if(g<memoryRegionsAndSizes[1])
+                    {
+                        status[2]=true;
+                    }
+                    else
+                    {
+                        status[2]=false;
+                    }
+                }
+                System.out.print("");
+                
+                
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(FixedPartitionManager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(FixedPartitionManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+            
         System.out.println(memoryRegionsAndSizes[0] + " " + memoryRegionsAndSizes[1]);
         System.out.println(ram[0] + " " + ram[1] + " " + ram[2]);
         
@@ -52,7 +129,7 @@ public class FixedPartitionManager {
                 }
                 System.out.println("");
             }
-        
+
         
         //Program logic
         System.out.println("\nCase 2");
@@ -181,8 +258,8 @@ public class FixedPartitionManager {
             
         }
         System.out.println("Average turnaround time = " + avgTurnAroundTime/memoryRegionsAndSizes[1]);
-        
-        
+
+
         
         PrintArray.add(addToPrintArray);
         int i = 0;
@@ -203,7 +280,8 @@ public class FixedPartitionManager {
                              
             }
         }
-        
+
+
         
         
    }
