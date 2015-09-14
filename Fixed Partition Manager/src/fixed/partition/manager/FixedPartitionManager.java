@@ -1,12 +1,11 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Fixed Parition Manager Created by Basuru Kusal
+ * Using the program without the authorization will result in violation of certain rules
+ * All rights not Reserved
  */
 package fixed.partition.manager;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 
@@ -20,12 +19,9 @@ public class FixedPartitionManager {
      */
     public static void main(String[] args){
         
-        /**
-         * These are test array lists
-         * may or may not be used in the final, best to ignore
-         */
-        ArrayList<ArrayList<Integer>> PrintArray = new ArrayList<>();
-        ArrayList<Integer> addToPrintArray = new ArrayList<>();
+        //Final Results are stored in these ArrayLists
+        ArrayList<ArrayList<String>> Arr = new ArrayList<>();
+        ArrayList<String> A = new ArrayList<>();
 
         int [] memoryRegionsAndSizes = new int [2];
         int [] ram = null;
@@ -33,7 +29,7 @@ public class FixedPartitionManager {
         boolean [] isSet = {false, false, false};
         int timeCounter [][] = {{0, 0},{0, 0},{0, 0},{0, 0}};
 
-        int caseNo =1;
+        int caseNo = 1;
         int memoryRegion;
         double avgTurnAroundTime = 0;
         
@@ -88,53 +84,22 @@ public class FixedPartitionManager {
                 }
             }
             
-
-                try 
-                {
-                    //Print sizes and ram
-                    System.out.println(memoryRegionsAndSizes[0] + " " + memoryRegionsAndSizes[1]);
-                    for(int k : ram)
-                    {
-                        System.out.print(k + " ");
-                    }
-                    System.out.println("");
-                    
-             }catch(IndexOutOfBoundsException e)
-             {
-                 System.out.println(e.getMessage());
-             }
-
-
-                for(int i = 0; i < programsAndTime.length; i++)
-                {
-                    for(int j = 0; j<9; j++)
-                    {
-                        try
-                        {
-                            System.out.print(programsAndTime[i][j] + " ");
-                        }
-                        catch(ArrayIndexOutOfBoundsException e)
-                        {
-                            //Do nothing
-                        }
-                    }
-                    System.out.println("");
-                }
-
-
             //Program logic
-            System.out.println("\nCase " + caseNo);
-
+            A.add("\nCase " + caseNo);
+            
             //Sort the Array
             Algorithms Algorithm = new Algorithms();
             Algorithm.ReplaceSort(programsAndTime,memoryRegionsAndSizes[1]);
             Algorithm.locationSort(programsAndTime,memoryRegionsAndSizes[1]);
 
+            /**
+             * Ignore this Array
+             * UNDER CONSTRUCTION
+             */
             int [] Array = Algorithm.getChangedIndexs();
             
             for(int i = 0; i < memoryRegionsAndSizes[1];i++)
             {
-
                 //Assiginin Start
                 if(isSet[0]==false)
                 {
@@ -143,11 +108,7 @@ public class FixedPartitionManager {
                     {
                         memoryRegion = 1;
                         timeCounter[0][1]+=programsAndTime[i][2];
-                        System.out.println("Program "+ (i+1) + " runs in region " + memoryRegion + " from " + timeCounter[0][0] + " to " + timeCounter[0][1] );
-                        addToPrintArray.add(i);
-                        addToPrintArray.add(memoryRegion);
-                        addToPrintArray.add(timeCounter[0][0]);
-                        addToPrintArray.add(timeCounter[0][1]);
+                        A.add("Program "+ (i+1) + " runs in region " + memoryRegion + " from " + timeCounter[0][0] + " to " + timeCounter[0][1] );
                         isSet[0]=true;
                         isSet[1]=false;
                         isSet[2]=false;
@@ -159,11 +120,7 @@ public class FixedPartitionManager {
                     {
                         memoryRegion = 2;
                         timeCounter[1][1]+=programsAndTime[i][2];
-                        System.out.println("Program "+ (i+1) + " runs in region " + memoryRegion + " from " + timeCounter[1][0] + " to " + timeCounter[1][1] );
-                        addToPrintArray.add(i);
-                        addToPrintArray.add(memoryRegion);
-                        addToPrintArray.add(timeCounter[1][0]);
-                        addToPrintArray.add(timeCounter[1][1]);
+                        A.add("Program "+ (i+1) + " runs in region " + memoryRegion + " from " + timeCounter[1][0] + " to " + timeCounter[1][1] );
                         isSet[0]=true;
                         isSet[1]=true;
                         isSet[2]=false;
@@ -175,18 +132,13 @@ public class FixedPartitionManager {
                     {
                         memoryRegion = 3;
                         timeCounter[2][1]+=programsAndTime[i][2];
-                        System.out.println("Program "+ (i+1) + " runs in region " + memoryRegion + " from " + timeCounter[2][0] + " to " + timeCounter[2][1] );
-                        addToPrintArray.add(i);
-                        addToPrintArray.add(memoryRegion);
-                        addToPrintArray.add(timeCounter[2][0]);
-                        addToPrintArray.add(timeCounter[2][1]);
+                        A.add("Program "+ (i+1) + " runs in region " + memoryRegion + " from " + timeCounter[2][0] + " to " + timeCounter[2][1] );
                         isSet[0]=true;
                         isSet[1]=true;
                         isSet[2]=false;
 
                         timeCounter[2][0] = timeCounter[2][1];
                         avgTurnAroundTime += timeCounter[2][1];
-
                     }
                 }
                 else if(isSet[1]==false)
@@ -196,11 +148,7 @@ public class FixedPartitionManager {
                     {
                         memoryRegion = 2;
                         timeCounter[1][1]+=programsAndTime[i][2];
-                        System.out.println("Program "+ (i+1) + " runs in region " + memoryRegion + " from " + timeCounter[1][0] + " to " + timeCounter[1][1] );
-                        addToPrintArray.add(i);
-                        addToPrintArray.add(memoryRegion);
-                        addToPrintArray.add(timeCounter[1][0]);
-                        addToPrintArray.add(timeCounter[1][1]);
+                         A.add("Program "+ (i+1) + " runs in region " + memoryRegion + " from " + timeCounter[1][0] + " to " + timeCounter[1][1] );
                         isSet[1]=true;
                         isSet[0]=false;
                         isSet[2]=false;
@@ -212,11 +160,7 @@ public class FixedPartitionManager {
                     {
                         memoryRegion = 3;
                         timeCounter[2][1]+=programsAndTime[i][2];
-                        System.out.println("Program "+ (i+1) + " runs in region " + memoryRegion + " from " + timeCounter[2][0] + " to " + timeCounter[2][1] );
-                        addToPrintArray.add(i);
-                        addToPrintArray.add(memoryRegion);
-                        addToPrintArray.add(timeCounter[2][0]);
-                        addToPrintArray.add(timeCounter[2][1]);
+                         A.add("Program "+ (i+1) + " runs in region " + memoryRegion + " from " + timeCounter[2][0] + " to " + timeCounter[2][1] );
                         isSet[1]=true;
                         isSet[0]=false;
                         isSet[2]=false;
@@ -224,7 +168,6 @@ public class FixedPartitionManager {
                         timeCounter[2][0] = timeCounter[2][1];
                         avgTurnAroundTime+= timeCounter[2][1];
                     }
-
                 }
                 else if(isSet[2]==false)
                 {
@@ -233,11 +176,7 @@ public class FixedPartitionManager {
                     {
                         memoryRegion = 3;
                         timeCounter[2][1]+=programsAndTime[i][2];
-                        System.out.println("Program "+ (i+1) + " runs in region " + memoryRegion + " from " + timeCounter[2][0] + " to " + timeCounter[2][1] );
-                        addToPrintArray.add(i);
-                        addToPrintArray.add(memoryRegion);
-                        addToPrintArray.add(timeCounter[2][0]);
-                        addToPrintArray.add(timeCounter[2][1]);
+                         A.add("Program "+ (i+1) + " runs in region " + memoryRegion + " from " + timeCounter[2][0] + " to " + timeCounter[2][1] );
                         isSet[0]=false;
                         isSet[1]=false;
                         isSet[2]=true;
@@ -246,35 +185,33 @@ public class FixedPartitionManager {
                         avgTurnAroundTime += timeCounter[2][1];
                     }
                 }
-
             }
-            System.out.println("Average turnaround time = " + avgTurnAroundTime/memoryRegionsAndSizes[1]);
+            A.add("Average turnaround time = " + avgTurnAroundTime/memoryRegionsAndSizes[1]);
             caseNo++;
+            avgTurnAroundTime = Algorithm.Clear(timeCounter, programsAndTime, isSet);
             
-            //Clear time Counter
-            for(int [] p : timeCounter)
-            {
-                Arrays.fill(p,0);
-            }
-            //Clear AVG time
-            avgTurnAroundTime = 0;
-            //Clear Programs and times
-            for(int [] p : programsAndTime)
-            {
-                Arrays.fill(p, 0);
-            }
-            //clear isSet array
-            Arrays.fill(isSet, false);
-            
-            System.out.print("No. Of Mempory Regions : ");
+            System.out.print("\nNo. Of Mempory Regions : ");
             memoryRegionsAndSizes[0] = getInput.nextInt();
             System.out.print("No. of Programs : ");
             memoryRegionsAndSizes[1] = getInput.nextInt();
         }
         
-        PrintArray.add(addToPrintArray);
+        //Add the values to a STRING ARRAY
+        Arr.add(A);
+        
         int i = 0;
+        int size;
+       
         System.out.println("\n");
-
+        
+        for(ArrayList<String> r : Arr)
+        {
+            size = r.size();
+            while(i < size)
+            {
+                System.out.println(r.get(i));
+                i++;
+            }
+        }
    }
 }
