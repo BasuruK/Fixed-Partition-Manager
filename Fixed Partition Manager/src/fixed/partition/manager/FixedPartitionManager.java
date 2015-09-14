@@ -51,6 +51,7 @@ public class FixedPartitionManager {
         int memoryRegion;
         double avgTurnAroundTime = 0;
         
+        //Get inputs
         String S;
         try {
             BufferedReader getInputs = new BufferedReader(new FileReader("src\\fixed\\partition\\manager\\Inputs.txt"));
@@ -73,7 +74,7 @@ public class FixedPartitionManager {
                 else if(status[1])
                 {
                     ram = new int[memoryRegionsAndSizes[0]];
-                    for(int i = 0;i < Tokens.length-2;i++)
+                    for(int i = 0;i < Tokens.length-1;i++)
                     {
                         for(int j = 0;j < Tokens.length;j++)
                         {
@@ -110,10 +111,13 @@ public class FixedPartitionManager {
             Logger.getLogger(FixedPartitionManager.class.getName()).log(Level.SEVERE, null, ex);
         }
             
-            
+            try {
         System.out.println(memoryRegionsAndSizes[0] + " " + memoryRegionsAndSizes[1]);
-        System.out.println(ram[0] + " " + ram[1] + " " + ram[2]);
-        
+        System.out.println(ram[0] + " " + ram[1]);
+         }catch(IndexOutOfBoundsException e)
+         {
+             System.out.println(e.getMessage());
+         }
             for(int i = 0; i < programsAndTime.length; i++)
             {
                 for(int j = 0; j<9; j++)
@@ -174,7 +178,7 @@ public class FixedPartitionManager {
                     addToPrintArray.add(timeCounter[1][0]);
                     addToPrintArray.add(timeCounter[1][1]);
                     isSet[0]=true;
-                    isSet[1]=false;
+                    isSet[1]=true;
                     isSet[2]=false;
                    
                     timeCounter[1][0] = timeCounter[1][1];
@@ -275,14 +279,10 @@ public class FixedPartitionManager {
             while(true)
             {
              i = Array[0];
-             System.out.println("Program "+ r.get(i-1) + " runs in region " + r.get(i) + " from " + r.get(i+1) + " to " + r.get(i+2) );
+             //System.out.println("Program "+ r.get(i-1) + " runs in region " + r.get(i) + " from " + r.get(i+1) + " to " + r.get(i+2) );
              break;
                              
             }
         }
-
-
-        
-        
    }
 }
