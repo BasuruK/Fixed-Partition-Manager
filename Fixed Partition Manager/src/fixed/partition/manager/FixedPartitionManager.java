@@ -7,8 +7,6 @@ package fixed.partition.manager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Scanner;
 
 
@@ -29,7 +27,7 @@ public class FixedPartitionManager {
         int [] memoryRegionsAndSizes = new int [2];
         int [] ram = null;
         int [][] programsAndTime = null;
-        boolean [] isSet = {false, false, false};
+        boolean [] isSet;
         int timeCounter [][];
 
         int caseNo = 1;
@@ -47,7 +45,7 @@ public class FixedPartitionManager {
         while(memoryRegionsAndSizes[0] != 0 && memoryRegionsAndSizes[1] != 0)
         {
             isSet = new boolean[memoryRegionsAndSizes[0]*2];
-           timeCounter = new int [memoryRegionsAndSizes[0]][2];
+            timeCounter = new int [memoryRegionsAndSizes[0]][2];
             ram = new int [memoryRegionsAndSizes[0]];
             programsAndTime = new int [memoryRegionsAndSizes[1]][5];
             
